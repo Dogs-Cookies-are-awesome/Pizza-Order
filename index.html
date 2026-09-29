@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+        <title>
+           Pizza Ordering Form 
+        </title>
+        
+       <style>
+           
+       </style> 
+        
+    </head>
+    
+    
+    <body>
+        
+        <h1>Choose a size: </h1>
+        
+        <form>
+            
+            <label>
+                <input type="radio" name="size" value="large $20.00"> Large
+            </label><br>
+            
+            <label>
+                <input type="radio" name="size" value="medium $15.50"> Medium
+            </label><br>
+            
+            <label>
+                <input type="radio" name="size" value="small $10.50"> Small
+            </label><br>
+        
+        </form>
+        
+        <h1>Choose your toppings: </h1>
+                
+        <form>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="mushroom $2.50"> Mushroom
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="onion $2.50"> Onion
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="bell-peppers $2.50"> Bell Peppers
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="pepperoni $2.50"> Pepperoni
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="bacon $2.50"> Bacon
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="chicken $2.50"> Chicken
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="olives $2.50"> Olives
+            </label><br>
+            
+            <label>
+                <input type="checkbox" name="toppings" value="pineapple $2.50"> Pineapple
+            </label><br>
+            
+        </form>
+        
+        <h1>Choose a drink</h1>
+
+            <input type="radio" name="drink" value="Coke"> Coke
+            <br>
+            
+            <input type="radio" name="drink" value="Pepsi"> Pepsi
+            
+            <p id="result"></p>
+            
+            <script>
+                const drinks = document.querySelectorAll('input[name="drink"]');
+            
+                drinks.forEach(function(drink) {
+                    drink.addEventListener("change", function() {
+                        document.getElementById("result").innerHTML =
+                            "You selected " + drink.value;
+                    });
+                });
+            </script>
+        
+         <p id="price">Total Price: </p>
+        
+            <script>
+          
+          // first step: we need to identify the radio buttons
+           
+        const buttons = document.querySelectorAll('input[name="size"]');
+           
+            function getPriceFromValue(value) {
+            const match = value.match(/\$(\d+(?:\.\d+)?)/);
+            return match ? parseFloat(match[1]) : 0;
+        }
+    
+        function showPrice() {
+            const checkedSize = document.querySelector('input[name="size"]:checked');
+            const checkedToppings = document.querySelectorAll('input[name="topping"]:checked');
+            const priceElement = document.getElementById('price');
+    
+            if (!checkedSize) {
+                priceElement.textContent = 'Total Price: ';
+                return;
+            }
+    
+            const sizePrice = getPriceFromValue(checkedSize.value);
+            const toppingsPrice = Array.from(checkedToppings).reduce((total, topping) => {
+                return total + getPriceFromValue(topping.value);
+            }, 0);
+    
+            priceElement.textContent = 'Total Price: $' + (sizePrice + toppingsPrice).toFixed(2);
+        }
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input[name="size"], input[name="topping"]').forEach((input) => {
+                input.addEventListener('change', showPrice);
+            });
+        });
+        function generateTicketNumber() {
+            const randomNumber = Math.floor(Math.random() * (999 - 100 + 1)) + 100;
+            alert("Thank you for your order! Your ticket number is: " + randomNumber + " and your total price is: " + document.getElementById("price").textContent.split("$")[1]);
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.checked = false;
+            });
+            document.querySelectorAll('input[type="radio"]').forEach(rb => {
+            rb.checked = false;
+            });
+        }
+          
+           
+       </script>
+        
+    </body>
+</html>
